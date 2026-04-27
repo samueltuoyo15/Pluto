@@ -21,7 +21,7 @@ zip.file('plugin.json', fs.readFileSync(pluginJSON));
 zip.file('readme.md', fs.readFileSync(readmeDotMd));
 zip.file('changelogs.md', fs.readFileSync(changelogDotMd));
 
-loadFile('', distFolder);
+loadFile('dist', distFolder);
 
 zip
   .generateNodeStream({ type: 'nodebuffer', streamFiles: true })

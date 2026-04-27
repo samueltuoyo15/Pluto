@@ -44,9 +44,14 @@ let buildConfig = {
     const ctx = await esbuild.context(buildConfig);
 
     await ctx.watch();
-    const { host, port } = await ctx.serve({
+    await ctx.serve({
       servedir: ".",
-      port: 3000,
+      port: 3002,
+      host: "0.0.0.0",
+      onRequest: (args) => {
+        // Log requests to see if they are hitting the server
+        console.log(`${args.method} ${args.path} - ${args.status}ms`);
+      },
     });
 
   } else {

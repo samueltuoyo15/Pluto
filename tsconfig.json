@@ -10,7 +10,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "types": ["acode-plugin-types"],
+    "skipLibCheck": true,
+    "types": ["acode-plugin-types"]
   },
   "exclude": ["./dist/**/*"],
 }

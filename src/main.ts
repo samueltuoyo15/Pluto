@@ -1,38 +1,43 @@
 import plugin from "../plugin.json";
 
+const sideBarApps = acode.require("sidebarApps");
+
 class AcodePlugin {
-	public baseUrl: string | undefined;
+    public baseUrl: string | undefined;
 
-	async init(
-		$page: Acode.WCPage,
-		cacheFile: Acode.FileSystem,
-		cacheFileUrl: string,
-	): Promise<void> {
-		// Add your initialization code here
-	}
+    async init(): Promise<void> {
+        if (!sideBarApps) return;
 
-	async destroy() {
-		// Add your cleanup code here
-	}
+        sideBarApps.add(
+            "smart_toy",
+            plugin.id,
+            plugin.name,
+            (container: HTMLElement) => {
+                container.innerHTML = `<div class="scroll" style="padding:12px;height:100%;overflow:auto;">Hello from ${plugin.name}</div>`;
+            },
+            false,
+            (_container: HTMLElement) => {},
+        );
+    }
+
+    async destroy() {
+        sideBarApps.remove(plugin.id);
+    }
 }
 
 if (window.acode) {
-	const acodePlugin = new AcodePlugin();
-	acode.setPluginInit(
-		plugin.id,
-		async (
-			baseUrl: string,
-			$page: Acode.WCPage,
-			{ cacheFileUrl, cacheFile }: Acode.PluginInitOptions,
-		) => {
-			if (!baseUrl.endsWith("/")) {
-				baseUrl += "/";
-			}
-			acodePlugin.baseUrl = baseUrl;
-			await acodePlugin.init($page, cacheFile, cacheFileUrl);
-		},
-	);
-	acode.setPluginUnmount(plugin.id, () => {
-		acodePlugin.destroy();
-	});
+    const acodePlugin = new AcodePlugin();
+    acode.setPluginInit(
+        plugin.id,
+        async (baseUrl: string) => {
+            if (!baseUrl.endsWith("/")) {
+                baseUrl += "/";
+            }
+            acodePlugin.baseUrl = baseUrl;
+            await acodePlugin.init();
+        },
+    );
+    acode.setPluginUnmount(plugin.id, () => {
+        acodePlugin.destroy();
+    });
 }
