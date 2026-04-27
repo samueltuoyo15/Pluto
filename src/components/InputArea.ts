@@ -10,6 +10,7 @@ export interface InputAreaHandle {
   input: HTMLTextAreaElement;
   sendBtn: HTMLButtonElement;
   setAgent: (agent: Agent) => void;
+  setDisabled: (disabled: boolean, reason?: string) => void;
 }
 
 export function createInputArea(cb: InputAreaCallbacks): InputAreaHandle {
@@ -39,11 +40,16 @@ export function createInputArea(cb: InputAreaCallbacks): InputAreaHandle {
 
   const sendBtn = document.createElement('button');
   sendBtn.className = 'pluto-send-btn';
-  sendBtn.textContent = '\u2191';
+  sendBtn.textContent = 'Send';
   sendBtn.addEventListener('click', handleSend);
   row.appendChild(sendBtn);
 
   wrap.appendChild(row);
+
+  const status = document.createElement('div');
+  status.className = 'pluto-input-status';
+  status.style.display = 'none';
+  wrap.appendChild(status);
 
   const agentBar = document.createElement('div');
   agentBar.className = 'pluto-agent-bar';
@@ -127,6 +133,13 @@ export function createInputArea(cb: InputAreaCallbacks): InputAreaHandle {
     setAgent(agent: Agent) {
       activeAgent = agent;
       updatePill();
+    },
+    setDisabled(disabled: boolean, reason = '') {
+      input.disabled = disabled;
+      sendBtn.disabled = disabled;
+      input.placeholder = disabled ? reason || 'Pluto is unavailable right now.' : 'Ask Pluto anything...';
+      status.textContent = reason;
+      status.style.display = disabled && reason ? 'block' : 'none';
     },
   };
 }

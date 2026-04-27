@@ -1,4 +1,7 @@
-export function createWelcome(onHintClick: (text: string) => void): HTMLElement {
+export function createWelcome(
+  onHintClick: (text: string) => void,
+  onOpenSettings: () => void,
+): HTMLElement {
   const el = document.createElement('div');
   el.className = 'pluto-welcome';
 
@@ -8,20 +11,29 @@ export function createWelcome(onHintClick: (text: string) => void): HTMLElement 
 
   const title = document.createElement('div');
   title.className = 'pluto-welcome-title';
-  title.textContent = 'What can I help you build?';
+  title.textContent = 'Ready when your project is ready';
 
   const sub = document.createElement('div');
   sub.className = 'pluto-welcome-sub';
-  sub.textContent = 'I can write code, fix bugs, refactor, and explain things. Just ask.';
+  sub.textContent = 'Open a file or project, add your Groq API key, then Pluto can help you edit real code instead of guessing.';
+
+  const actions = document.createElement('div');
+  actions.className = 'pluto-welcome-actions';
+
+  const settingsBtn = document.createElement('button');
+  settingsBtn.className = 'pluto-primary-btn';
+  settingsBtn.textContent = 'Add API key';
+  settingsBtn.addEventListener('click', onOpenSettings);
+  actions.appendChild(settingsBtn);
 
   const hints = document.createElement('div');
   hints.className = 'pluto-welcome-hints';
 
   const hintTexts = [
-    'Find bugs in my code and fix them',
+    'Fix the bug in the active file',
     'Refactor this file for readability',
-    'Explain how this function works',
-    'Add error handling here',
+    'Explain the current function',
+    'Add proper error handling here',
   ];
 
   hintTexts.forEach(text => {
@@ -35,6 +47,7 @@ export function createWelcome(onHintClick: (text: string) => void): HTMLElement 
   el.appendChild(icon);
   el.appendChild(title);
   el.appendChild(sub);
+  el.appendChild(actions);
   el.appendChild(hints);
   return el;
 }

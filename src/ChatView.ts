@@ -7,6 +7,7 @@ import { createDiffBar, DiffBarHandle } from './components/DiffBar';
 import { renderMessage, createTypingIndicator, createToolActivity } from './components/MessageRenderer';
 
 export interface ChatViewCallbacks {
+  onBack: () => void;
   onSend: (text: string) => void;
   onAcceptFile: (filepath: string) => void;
   onRejectFile: (filepath: string) => void;
@@ -25,6 +26,10 @@ export class ChatView {
   private messagesEl: HTMLElement;
   private welcomeEl: HTMLElement;
   private typingEl: HTMLElement;
+  private stateEl: HTMLElement;
+  private stateTitleEl: HTMLElement;
+  private stateBodyEl: HTMLElement;
+  private stateActionEl: HTMLButtonElement;
   private toolActivityEls: HTMLElement[] = [];
   private contextBar: ContextBarHandle;
   private inputArea: InputAreaHandle;
@@ -38,6 +43,7 @@ export class ChatView {
     this.root.className = 'pluto';
 
     this.root.appendChild(createHeader({
+      onBack: opts.onBack,
       onSettingsOpen: opts.onSettingsOpen,
       onNewChat: opts.onNewChat,
     }));
@@ -57,9 +63,24 @@ export class ChatView {
     });
     this.root.appendChild(this.contextBar.el);
 
+    this.stateEl = document.createElement('div');
+    this.stateEl.className = 'pluto-state';
+    this.stateEl.style.display = 'none';
+    this.stateEl.innerHTML = `
+      <div class="pluto-state-copy">
+        <div class="pluto-state-title"></div>
+        <div class="pluto-state-body"></div>
+      </div>
+      <button class="pluto-secondary-btn">Open settings</button>
+    `;
+    this.stateTitleEl = this.stateEl.querySelector('.pluto-state-title') as HTMLElement;
+    this.stateBodyEl = this.stateEl.querySelector('.pluto-state-body') as HTMLElement;
+    this.stateActionEl = this.stateEl.querySelector('.pluto-secondary-btn') as HTMLButtonElement;
+    this.root.appendChild(this.stateEl);
+
     this.welcomeEl = createWelcome((text) => {
       opts.onSend(text);
-    });
+    }, opts.onSettingsOpen);
     this.root.appendChild(this.welcomeEl);
 
     this.messagesEl = document.createElement('div');
@@ -136,6 +157,23 @@ export class ChatView {
   setGenerating(generating: boolean): void {
     this.inputArea.sendBtn.disabled = generating;
     if (!generating) this.inputArea.input.focus();
+  }
+
+  setBlockedState(blocked: boolean, config?: { title: string; body: string; actionLabel?: string; action?: () => void; reason?: string }): void {
+    if (!blocked || !config) {
+      this.stateEl.style.display = 'none';
+      this.inputArea.setDisabled(false);
+      return;
+    }
+
+    this.stateTitleEl.textContent = config.title;
+    this.stateBodyEl.textContent = config.body;
+    this.stateActionEl.textContent = config.actionLabel || 'Open settings';
+    this.stateActionEl.onclick = () => {
+      config.action?.();
+    };
+    this.stateEl.style.display = 'flex';
+    this.inputArea.setDisabled(true, config.reason || config.body);
   }
 
   addContextFile(filepath: string): void {
