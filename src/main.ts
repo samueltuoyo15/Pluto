@@ -1,15 +1,26 @@
 import plugin from "../plugin.json";
 
 const sideBarApps = acode.require("sidebarApps");
+const Url = acode.require("url");
 
 class AcodePlugin {
+    private static readonly SIDEBAR_ICON = "pluto";
+    private static readonly SIDEBAR_ICON_PATH = "assets/pluto.svg";
+
     public baseUrl: string | undefined;
 
     async init(): Promise<void> {
-        if (!sideBarApps) return;
+        if (!sideBarApps || !this.baseUrl) return;
+
+        acode.addIcon(
+            AcodePlugin.SIDEBAR_ICON,
+            await acode.toInternalUrl(
+                Url.join(this.baseUrl, AcodePlugin.SIDEBAR_ICON_PATH),
+            ),
+        );
 
         sideBarApps.add(
-            "smart_toy",
+            AcodePlugin.SIDEBAR_ICON,
             plugin.id,
             plugin.name,
             (container: HTMLElement) => {
