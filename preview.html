@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Pluto Preview</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; background: #000; overflow: hidden; }
+    .phone-frame {
+      width: 360px;
+      height: 720px;
+      margin: 20px auto;
+      border: 2px solid #333;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #0f0f0f;
+      display: flex;
+      flex-direction: column;
+    }
+    .phone-notch {
+      height: 28px;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #666;
+      flex-shrink: 0;
+    }
+    .phone-content {
+      flex: 1;
+      overflow: hidden;
+    }
+    @media (max-width: 400px) {
+      .phone-frame {
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+      }
+      .phone-notch { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <div class="phone-notch">Pluto Preview</div>
+    <div class="phone-content" id="pluto-container"></div>
+  </div>
+  <script src="dist/main.js"></script>
+  <script>
+    // Mock Acode globals for preview
+    if (!window.acode) {
+      window.editorManager = {
+        activeFile: { filename: 'main.ts', uri: 'file:///main.ts' },
+        files: [],
+        editor: {},
+        on: function(){},
+        off: function(){},
+        emit: function(){},
+      };
+
+      window.acode = {
+        require: function(name) {
+          if (name === 'sidebarApps') {
+            return {
+              add: function(icon, id, title, initFn) {
+                initFn(document.getElementById('pluto-container'));
+              },
+              remove: function() {},
+              get: function() { return null; }
+            };
+          }
+          if (name === 'url') {
+            return { join: function() { return ''; } };
+          }
+          return null;
+        },
+        setPluginInit: function(id, initFn) {
+          initFn('/');
+        },
+        setPluginUnmount: function() {},
+        addIcon: function() {},
+        toInternalUrl: async function(url) { return url; },
+        pushNotification: function(title, msg, opts) {
+          console.log('[Notification]', title, msg, opts);
+        },
+        exec: function() {},
+        define: function() {},
+        registerFormatter: function() {},
+        unregisterFormatter: function() {},
+        format: async function() {},
+        joinUrl: function() { return ''; },
+        alert: function() {},
+        confirm: function() {},
+        select: function() {},
+        multiPrompt: function() {},
+        loader: function() {},
+        prompt: function() {},
+        fsOperation: function() {},
+        fileBrowser: function() {},
+        setLoadingMessage: function() {},
+        waitForPlugin: async function() { return true; },
+        registerFileHandler: function() {},
+        unregisterFileHandler: function() {},
+        newEditorFile: function() {},
+        installPlugin: async function() {},
+      };
+    }
+  </script>
+</body>
+</html>
