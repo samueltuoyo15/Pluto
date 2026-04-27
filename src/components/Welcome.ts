@@ -1,22 +1,40 @@
 export function createWelcome(onHintClick: (text: string) => void): HTMLElement {
   const el = document.createElement('div');
   el.className = 'pluto-welcome';
-  el.innerHTML = `
-    <div class="pluto-welcome-icon">\u2726</div>
-    <div class="pluto-welcome-title">What can I help you build?</div>
-    <div class="pluto-welcome-sub">I can write code, fix bugs, refactor, and explain your codebase.</div>
-    <div class="pluto-welcome-hints">
-      <button class="pluto-hint">Find bugs in my code and fix them</button>
-      <button class="pluto-hint">Refactor this file for readability</button>
-      <button class="pluto-hint">Explain how this function works</button>
-    </div>
-  `;
 
-  el.querySelectorAll('.pluto-hint').forEach(btn => {
-    btn.addEventListener('click', () => {
-      onHintClick((btn as HTMLElement).textContent || '');
-    });
+  const icon = document.createElement('div');
+  icon.className = 'pluto-welcome-icon';
+  icon.textContent = 'P';
+
+  const title = document.createElement('div');
+  title.className = 'pluto-welcome-title';
+  title.textContent = 'What can I help you build?';
+
+  const sub = document.createElement('div');
+  sub.className = 'pluto-welcome-sub';
+  sub.textContent = 'I can write code, fix bugs, refactor, and explain things. Just ask.';
+
+  const hints = document.createElement('div');
+  hints.className = 'pluto-welcome-hints';
+
+  const hintTexts = [
+    'Find bugs in my code and fix them',
+    'Refactor this file for readability',
+    'Explain how this function works',
+    'Add error handling here',
+  ];
+
+  hintTexts.forEach(text => {
+    const btn = document.createElement('button');
+    btn.className = 'pluto-hint';
+    btn.textContent = text;
+    btn.addEventListener('click', () => onHintClick(text));
+    hints.appendChild(btn);
   });
 
+  el.appendChild(icon);
+  el.appendChild(title);
+  el.appendChild(sub);
+  el.appendChild(hints);
   return el;
 }

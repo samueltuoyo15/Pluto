@@ -1,5 +1,3 @@
-/** Simple markdown-to-HTML renderer for chat messages */
-
 const KEYWORDS = new Set([
   'const','let','var','function','return','if','else','for','while',
   'class','import','export','from','async','await','new','this',
@@ -11,33 +9,12 @@ const KEYWORDS = new Set([
   'and','or','None','True','False','self',
 ]);
 
-export function highlightCode(code: string, lang: string): string {
-  const escaped = escapeHtml(code);
-  
-  return escaped
-    // Comments (// and #)
-    .replace(/(\/\/.*$|#(?![\w{]).*$)/gm, '<span class="pluto-tok-cm">$1</span>')
-    // Multi-line comments
-    .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="pluto-tok-cm">$1</span>')
-    // Strings (double and single quoted)
-    .replace(/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|`[^`]*?`)/g, '<span class="pluto-tok-str">$1</span>')
-    // Numbers
-    .replace(/\b(\d+\.?\d*)\b/g, '<span class="pluto-tok-num">$1</span>')
-    // Function calls
-    .replace(/(\w+)(?=\s*\()/g, (match) => {
-      if (KEYWORDS.has(match)) return match;
-      return `<span class="pluto-tok-fn">${match}</span>`;
-    })
-    // Keywords
-    .replace(/\b(\w+)\b/g, (match) => {
-      if (KEYWORDS.has(match)) {
-        return `<span class="pluto-tok-kw">${match}</span>`;
-      }
-      return match;
-    })
-    // Arrow operators
-    .replace(/(=&gt;)/g, '<span class="pluto-tok-op">$1</span>');
-}
+const BASH_KEYWORDS = new Set([
+  'npm','npx','pnpm','yarn','bun','node','git','cd','ls','mkdir','rm',
+  'cp','mv','cat','echo','export','source','chmod','curl','wget','grep',
+  'find','touch','sudo','apt','brew','pip','python','python3','tsc',
+  'eslint','prettier',
+]);
 
 export function escapeHtml(str: string): string {
   return str
@@ -46,6 +23,39 @@ export function escapeHtml(str: string): string {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
+}
+
+export function highlightCode(code: string, lang: string): string {
+  if (lang === 'bash' || lang === 'sh' || lang === 'shell') {
+    return highlightBash(code);
+  }
+  const escaped = escapeHtml(code);
+  return escaped
+    .replace(/(\/\/.*$|#(?![\w{]).*$)/gm, '<span class="pluto-tok-cm">$1</span>')
+    .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="pluto-tok-cm">$1</span>')
+    .replace(/(&quot;[^&]*?&quot;|&#39;[^&]*?&#39;|`[^`]*?`)/g, '<span class="pluto-tok-str">$1</span>')
+    .replace(/\b(\d+\.?\d*)\b/g, '<span class="pluto-tok-num">$1</span>')
+    .replace(/(\w+)(?=\s*\()/g, (match) => {
+      if (KEYWORDS.has(match)) return match;
+      return `<span class="pluto-tok-fn">${match}</span>`;
+    })
+    .replace(/\b(\w+)\b/g, (match) => {
+      if (KEYWORDS.has(match)) return `<span class="pluto-tok-kw">${match}</span>`;
+      return match;
+    })
+    .replace(/(=&gt;)/g, '<span class="pluto-tok-op">$1</span>');
+}
+
+function highlightBash(code: string): string {
+  return escapeHtml(code)
+    .replace(/#.*$/gm, '<span class="pluto-tok-cm">$&</span>')
+    .replace(/"[^"]*"/g, '<span class="pluto-tok-str">$&</span>')
+    .replace(/'[^']*'/g, '<span class="pluto-tok-str">$&</span>')
+    .replace(/\b(\w+)\b/g, (match) => {
+      if (BASH_KEYWORDS.has(match)) return `<span class="pluto-tok-kw">${match}</span>`;
+      return match;
+    })
+    .replace(/(-{1,2}[\w-]+)/g, '<span class="pluto-tok-op">$1</span>');
 }
 
 export function renderMarkdown(text: string): string {
@@ -59,7 +69,6 @@ export function renderMarkdown(text: string): string {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Code block fence
     if (line.trim().startsWith('```')) {
       if (!inCodeBlock) {
         if (inList) { html += '</ul>'; inList = false; }
@@ -67,7 +76,7 @@ export function renderMarkdown(text: string): string {
         codeLang = line.trim().slice(3).trim() || 'text';
         codeContent = '';
       } else {
-        html += renderCodeBlock(codeLang, codeContent.slice(0, -1)); // remove trailing \n
+        html += renderCodeBlock(codeLang, codeContent.slice(0, -1));
         inCodeBlock = false;
       }
       continue;
@@ -78,13 +87,11 @@ export function renderMarkdown(text: string): string {
       continue;
     }
 
-    // Empty line
     if (line.trim() === '') {
       if (inList) { html += '</ul>'; inList = false; }
       continue;
     }
 
-    // List items
     if (/^[\s]*[-*]\s/.test(line)) {
       if (!inList) { html += '<ul>'; inList = true; }
       html += `<li>${inlineFormat(line.replace(/^[\s]*[-*]\s/, ''))}</li>`;
@@ -93,24 +100,23 @@ export function renderMarkdown(text: string): string {
 
     if (inList) { html += '</ul>'; inList = false; }
 
-    // Regular paragraph
     html += `<p>${inlineFormat(line)}</p>`;
   }
 
   if (inList) html += '</ul>';
-  if (inCodeBlock) {
-    html += renderCodeBlock(codeLang, codeContent.slice(0, -1));
-  }
+  if (inCodeBlock) html += renderCodeBlock(codeLang, codeContent.slice(0, -1));
 
   return html;
 }
 
 function renderCodeBlock(lang: string, code: string): string {
+  const isBash = lang === 'bash' || lang === 'sh' || lang === 'shell';
   const highlighted = highlightCode(code, lang);
-  return `<div class="pluto-code">
+  const extraClass = isBash ? ' pluto-code--bash' : '';
+  return `<div class="pluto-code${extraClass}">
     <div class="pluto-code-header">
-      <span class="pluto-code-lang">${escapeHtml(lang)}</span>
-      <button class="pluto-code-copy" data-code="${escapeHtml(code)}">⎘ copy</button>
+      <span class="pluto-code-lang">${isBash ? 'terminal' : escapeHtml(lang)}</span>
+      <button class="pluto-code-copy" data-code="${escapeHtml(code)}">copy</button>
     </div>
     <div class="pluto-code-body">${highlighted}</div>
   </div>`;
@@ -118,10 +124,7 @@ function renderCodeBlock(lang: string, code: string): string {
 
 function inlineFormat(text: string): string {
   return text
-    // Bold
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    // Inline code
     .replace(/`([^`]+)`/g, '<code>$1</code>')
-    // Italic
     .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
 }

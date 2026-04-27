@@ -3,14 +3,14 @@ import { renderMarkdown } from '../markdown';
 
 export function renderMessage(msg: Message): HTMLElement {
   const el = document.createElement('div');
-  el.className = `pluto-msg ${msg.role === 'user' ? 'pluto-msg--user' : ''}`;
+  el.className = `pluto-msg${msg.role === 'user' ? ' pluto-msg--user' : ''}`;
 
   if (msg.role === 'assistant') {
     const header = document.createElement('div');
     header.className = 'pluto-msg-header';
     header.innerHTML = `
-      <span class="pluto-msg-avatar pluto-msg-avatar--agent">\u2726</span>
-      <span class="pluto-msg-name">PLUTO</span>
+      <span class="pluto-msg-avatar pluto-msg-avatar--agent">P</span>
+      <span class="pluto-msg-name">Pluto</span>
       <span class="pluto-msg-time">${formatTime(msg.timestamp)}</span>
     `;
     el.appendChild(header);
@@ -21,7 +21,7 @@ export function renderMessage(msg: Message): HTMLElement {
   body.innerHTML = renderMarkdown(msg.content);
   el.appendChild(body);
 
-  if (msg.fileChanges) {
+  if (msg.fileChanges && msg.fileChanges.length > 0) {
     msg.fileChanges.forEach(fc => {
       const label = document.createElement('div');
       label.className = 'pluto-edit-label';
@@ -42,7 +42,28 @@ export function createTypingIndicator(): HTMLElement {
       <span class="pluto-typing-dot"></span>
       <span class="pluto-typing-dot"></span>
     </div>
-    <span class="pluto-typing-label">Pluto is thinking\u2026</span>
+    <span class="pluto-typing-label">thinking...</span>
+  `;
+  return el;
+}
+
+export function createToolActivity(toolName: string, filename?: string): HTMLElement {
+  const el = document.createElement('div');
+  el.className = 'pluto-tool-activity';
+
+  const verbMap: Record<string, string> = {
+    read_file: 'Reading',
+    edit_file: 'Editing',
+    list_files: 'Listing files',
+  };
+
+  const verb = verbMap[toolName] || toolName;
+  const label = filename ? `${verb} ${esc(filename)}` : verb;
+
+  el.innerHTML = `
+    <span class="pluto-tool-icon">&#8635;</span>
+    <span>${label}</span>
+    ${filename ? `<span class="pluto-tool-name">${esc(filename)}</span>` : ''}
   `;
   return el;
 }

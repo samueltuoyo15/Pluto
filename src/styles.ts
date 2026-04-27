@@ -1,21 +1,21 @@
 export const PLUTO_CSS = `
 .pluto {
-  --p-bg: #0f0f0f;
-  --p-surface: #161616;
-  --p-surface-2: #1c1c1c;
-  --p-surface-hover: #212121;
-  --p-border: #262626;
-  --p-border-subtle: #1e1e1e;
-  --p-text: #e0e0e0;
-  --p-text-2: #888;
-  --p-text-3: #555;
-  --p-accent: #7c8aff;
-  --p-accent-dim: rgba(124,138,255,0.08);
-  --p-accent-border: rgba(124,138,255,0.2);
-  --p-success: #4ade80;
-  --p-success-dim: rgba(74,222,128,0.08);
-  --p-error: #f87171;
-  --p-error-dim: rgba(248,113,113,0.08);
+  --p-bg: #1e1e2e;
+  --p-surface: #262637;
+  --p-surface-2: #2e2e40;
+  --p-surface-hover: #36364a;
+  --p-border: #3a3a52;
+  --p-border-subtle: #313148;
+  --p-text: #cdd6f4;
+  --p-text-2: #9399b2;
+  --p-text-3: #6c7086;
+  --p-accent: #89b4fa;
+  --p-accent-dim: rgba(137,180,250,0.1);
+  --p-accent-border: rgba(137,180,250,0.2);
+  --p-success: #a6e3a1;
+  --p-success-dim: rgba(166,227,161,0.08);
+  --p-error: #f38ba8;
+  --p-error-dim: rgba(243,139,168,0.08);
   --p-radius: 8px;
   --p-radius-sm: 6px;
   --p-radius-lg: 12px;
@@ -33,13 +33,13 @@ export const PLUTO_CSS = `
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Header ── */
+/* Header */
 .pluto-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--p-border);
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--p-border-subtle);
   flex-shrink: 0;
 }
 .pluto-header-left {
@@ -61,11 +61,11 @@ export const PLUTO_CSS = `
 }
 .pluto-header-actions {
   display: flex;
-  gap: 4px;
+  gap: 2px;
 }
 .pluto-icon-btn {
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -83,12 +83,12 @@ export const PLUTO_CSS = `
   color: var(--p-text);
 }
 
-/* ── Context Bar ── */
+/* Context Bar */
 .pluto-ctx {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 12px;
+  padding: 8px 14px;
   border-bottom: 1px solid var(--p-border-subtle);
   flex-shrink: 0;
   overflow-x: auto;
@@ -109,7 +109,7 @@ export const PLUTO_CSS = `
   gap: 4px;
   padding: 3px 8px;
   background: var(--p-surface);
-  border: 1px solid var(--p-border);
+  border: 1px solid var(--p-border-subtle);
   border-radius: 100px;
   font-size: 11px;
   color: var(--p-text-2);
@@ -143,11 +143,11 @@ export const PLUTO_CSS = `
   color: var(--p-text-2);
 }
 
-/* ── Diff Bar ── */
+/* Diff Bar */
 .pluto-diff-bar {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid var(--p-border);
+  border-bottom: 1px solid var(--p-border-subtle);
   flex-shrink: 0;
   animation: pluto-slide-down 0.2s ease;
 }
@@ -155,7 +155,7 @@ export const PLUTO_CSS = `
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 8px 14px;
 }
 .pluto-diff-bar-title {
   font-size: 12px;
@@ -188,12 +188,12 @@ export const PLUTO_CSS = `
 .pluto-diff-btn--revert {
   background: var(--p-surface);
   color: var(--p-text-2);
-  border: 1px solid var(--p-border);
+  border: 1px solid var(--p-border-subtle);
 }
 
-/* ── File Change Cards ── */
+/* File Change Cards */
 .pluto-diff-files {
-  padding: 0 12px 8px;
+  padding: 0 14px 8px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -202,9 +202,9 @@ export const PLUTO_CSS = `
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 10px;
+  padding: 8px 10px;
   background: var(--p-surface);
-  border: 1px solid var(--p-border);
+  border: 1px solid var(--p-border-subtle);
   border-radius: var(--p-radius-sm);
   cursor: pointer;
   transition: background 0.15s;
@@ -242,8 +242,8 @@ export const PLUTO_CSS = `
   margin-left: 8px;
 }
 .pluto-file-action {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -259,10 +259,10 @@ export const PLUTO_CSS = `
 .pluto-file-action--reject { color: var(--p-error); }
 .pluto-file-action:active { background: var(--p-surface-hover); }
 
-/* ── Diff Expanded ── */
+/* Diff Expanded */
 .pluto-diff-expand {
   margin: 4px 0;
-  border: 1px solid var(--p-border);
+  border: 1px solid var(--p-border-subtle);
   border-radius: var(--p-radius-sm);
   overflow: hidden;
   font-size: 12px;
@@ -283,7 +283,7 @@ export const PLUTO_CSS = `
   background: var(--p-error-dim);
   color: var(--p-error);
   text-decoration: line-through;
-  text-decoration-color: rgba(248,113,113,0.3);
+  text-decoration-color: rgba(243,139,168,0.3);
 }
 .pluto-diff-line--context {
   color: var(--p-text-3);
@@ -306,21 +306,23 @@ export const PLUTO_CSS = `
   min-width: 0;
 }
 
-/* ── Messages ── */
+/* Messages */
 .pluto-messages {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 12px 0;
-  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 .pluto-messages::-webkit-scrollbar { width: 3px; }
+.pluto-messages::-webkit-scrollbar-track { background: transparent; }
 .pluto-messages::-webkit-scrollbar-thumb {
   background: var(--p-border);
   border-radius: 3px;
 }
 .pluto-msg {
-  padding: 8px 12px;
+  padding: 10px 14px;
   animation: pluto-fade-in 0.2s ease;
 }
 .pluto-msg + .pluto-msg {
@@ -329,24 +331,25 @@ export const PLUTO_CSS = `
 .pluto-msg--user {
   background: var(--p-accent-dim);
   border-left: 2px solid var(--p-accent);
-  margin: 4px 12px;
+  margin: 6px 14px;
   border-radius: 0 var(--p-radius-sm) var(--p-radius-sm) 0;
-  padding: 10px 12px;
+  padding: 10px 14px;
 }
 .pluto-msg-header {
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .pluto-msg-avatar {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 700;
   flex-shrink: 0;
 }
 .pluto-msg-avatar--agent {
@@ -354,15 +357,12 @@ export const PLUTO_CSS = `
   border: 1px solid var(--p-accent-border);
   color: var(--p-accent);
 }
-.pluto-msg-avatar--user {
-  background: var(--p-surface-2);
-  color: var(--p-text-2);
-}
 .pluto-msg-name {
   font-size: 11px;
   font-weight: 600;
   color: var(--p-text-2);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 .pluto-msg-time {
   font-size: 10px;
@@ -371,7 +371,7 @@ export const PLUTO_CSS = `
 }
 .pluto-msg-body {
   font-size: 13px;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--p-text);
 }
 .pluto-msg-body p {
@@ -401,10 +401,10 @@ export const PLUTO_CSS = `
   line-height: 1.5;
 }
 
-/* ── Code Blocks ── */
+/* Code Blocks */
 .pluto-code {
   margin: 8px 0;
-  border: 1px solid var(--p-border);
+  border: 1px solid var(--p-border-subtle);
   border-radius: var(--p-radius-sm);
   overflow: hidden;
 }
@@ -412,9 +412,9 @@ export const PLUTO_CSS = `
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 10px;
+  padding: 6px 10px;
   background: var(--p-surface);
-  border-bottom: 1px solid var(--p-border);
+  border-bottom: 1px solid var(--p-border-subtle);
 }
 .pluto-code-lang {
   font-size: 10px;
@@ -429,7 +429,7 @@ export const PLUTO_CSS = `
   gap: 4px;
   padding: 2px 8px;
   background: transparent;
-  border: 1px solid var(--p-border);
+  border: 1px solid var(--p-border-subtle);
   border-radius: 4px;
   font-size: 10px;
   color: var(--p-text-3);
@@ -455,20 +455,34 @@ export const PLUTO_CSS = `
 .pluto-code-body::-webkit-scrollbar { display: none; }
 
 /* Syntax tokens */
-.pluto-tok-kw { color: #c792ea; }
-.pluto-tok-str { color: #c3e88d; }
-.pluto-tok-num { color: #f78c6c; }
-.pluto-tok-cm { color: #555; font-style: italic; }
-.pluto-tok-fn { color: #82aaff; }
-.pluto-tok-op { color: #89ddff; }
-.pluto-tok-type { color: #ffcb6b; }
+.pluto-tok-kw { color: #cba6f7; }
+.pluto-tok-str { color: #a6e3a1; }
+.pluto-tok-num { color: #fab387; }
+.pluto-tok-cm { color: #6c7086; font-style: italic; }
+.pluto-tok-fn { color: #89b4fa; }
+.pluto-tok-op { color: #89dceb; }
+.pluto-tok-type { color: #f9e2af; }
 
-/* ── Typing Indicator ── */
+.pluto-code--bash .pluto-code-header {
+  background: #1a2234;
+  border-bottom-color: #253048;
+}
+.pluto-code--bash .pluto-code-lang {
+  color: #a6e3a1;
+}
+.pluto-code--bash .pluto-code-body {
+  background: #111927;
+  color: #a6e3a1;
+}
+.pluto-code--bash .pluto-tok-kw { color: #89dceb; }
+.pluto-code--bash .pluto-tok-op { color: #f9e2af; }
+
+/* Typing Indicator */
 .pluto-typing {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 12px;
+  padding: 12px 14px;
 }
 .pluto-typing-dots {
   display: flex;
@@ -488,23 +502,46 @@ export const PLUTO_CSS = `
   color: var(--p-text-3);
 }
 
-/* ── Input Area ── */
+/* Tool Activity */
+.pluto-tool-activity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: var(--p-text-3);
+  animation: pluto-fade-in 0.2s ease;
+}
+.pluto-tool-icon {
+  color: var(--p-accent);
+  font-size: 13px;
+}
+.pluto-tool-name {
+  font-family: var(--p-mono);
+  font-size: 11px;
+  color: var(--p-text-2);
+  background: var(--p-surface);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+/* Input Area */
 .pluto-input-wrap {
   flex-shrink: 0;
-  border-top: 1px solid var(--p-border);
+  border-top: 1px solid var(--p-border-subtle);
   background: var(--p-bg);
 }
 .pluto-input-row {
   display: flex;
   align-items: flex-end;
-  gap: 6px;
-  padding: 10px 12px 6px;
+  gap: 8px;
+  padding: 12px 14px 8px;
 }
 .pluto-input {
   flex: 1;
-  min-height: 36px;
+  min-height: 40px;
   max-height: 120px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   background: var(--p-surface);
   border: 1px solid var(--p-border);
   border-radius: var(--p-radius-lg);
@@ -523,16 +560,17 @@ export const PLUTO_CSS = `
   border-color: var(--p-accent-border);
 }
 .pluto-send-btn {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--p-accent);
   border: none;
   border-radius: 50%;
-  color: #fff;
-  font-size: 16px;
+  color: #1e1e2e;
+  font-size: 18px;
+  font-weight: 700;
   cursor: pointer;
   flex-shrink: 0;
   transition: opacity 0.15s, transform 0.1s;
@@ -545,23 +583,23 @@ export const PLUTO_CSS = `
   cursor: default;
 }
 
-/* ── Agent Selector (Bottom) ── */
+/* Agent Selector (Bottom) */
 .pluto-agent-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 12px 10px;
+  padding: 4px 14px 12px;
   gap: 6px;
 }
 .pluto-agent-pill {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 4px 12px;
+  gap: 6px;
+  padding: 5px 14px;
   background: var(--p-surface);
-  border: 1px solid var(--p-border);
+  border: 1px solid var(--p-border-subtle);
   border-radius: 100px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--p-text-2);
   cursor: pointer;
   font-family: var(--p-font);
@@ -570,11 +608,13 @@ export const PLUTO_CSS = `
 .pluto-agent-pill:active {
   border-color: var(--p-accent-border);
 }
-.pluto-agent-icon {
-  font-size: 12px;
-}
 .pluto-agent-name {
   font-weight: 500;
+}
+.pluto-agent-model {
+  font-size: 10px;
+  color: var(--p-text-3);
+  font-family: var(--p-mono);
 }
 .pluto-agent-chevron {
   font-size: 8px;
@@ -582,14 +622,14 @@ export const PLUTO_CSS = `
   margin-left: 2px;
 }
 
-/* ── Agent Picker Dropdown ── */
+/* Agent Picker Dropdown */
 .pluto-agent-picker {
   position: absolute;
   bottom: 56px;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 260px;
+  width: calc(100% - 28px);
+  max-width: 280px;
   background: var(--p-surface);
   border: 1px solid var(--p-border);
   border-radius: var(--p-radius);
@@ -600,8 +640,8 @@ export const PLUTO_CSS = `
 .pluto-agent-option {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
+  gap: 10px;
+  padding: 12px 14px;
   cursor: pointer;
   transition: background 0.1s;
   border: none;
@@ -617,12 +657,10 @@ export const PLUTO_CSS = `
 .pluto-agent-option + .pluto-agent-option {
   border-top: 1px solid var(--p-border-subtle);
 }
-.pluto-agent-option-icon {
-  font-size: 14px;
-}
 .pluto-agent-option-info {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 .pluto-agent-option-name {
   font-size: 13px;
@@ -631,6 +669,7 @@ export const PLUTO_CSS = `
 .pluto-agent-option-model {
   font-size: 10px;
   color: var(--p-text-3);
+  font-family: var(--p-mono);
 }
 .pluto-agent-option--active {
   background: var(--p-accent-dim);
@@ -639,7 +678,7 @@ export const PLUTO_CSS = `
   color: var(--p-accent);
 }
 
-/* ── Welcome State ── */
+/* Welcome State */
 .pluto-welcome {
   flex: 1;
   display: flex;
@@ -649,10 +688,20 @@ export const PLUTO_CSS = `
   padding: 24px;
   text-align: center;
   gap: 12px;
+  min-height: 0;
 }
 .pluto-welcome-icon {
-  font-size: 32px;
-  opacity: 0.6;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--p-accent-dim);
+  border: 1px solid var(--p-accent-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--p-accent);
+  font-size: 16px;
+  font-weight: 700;
 }
 .pluto-welcome-title {
   font-size: 15px;
@@ -663,20 +712,20 @@ export const PLUTO_CSS = `
   font-size: 12px;
   color: var(--p-text-3);
   line-height: 1.5;
-  max-width: 220px;
+  max-width: 240px;
 }
 .pluto-welcome-hints {
   display: flex;
   flex-direction: column;
   gap: 6px;
   width: 100%;
-  max-width: 260px;
+  max-width: 280px;
   margin-top: 8px;
 }
 .pluto-hint {
-  padding: 10px 12px;
+  padding: 12px 14px;
   background: var(--p-surface);
-  border: 1px solid var(--p-border);
+  border: 1px solid var(--p-border-subtle);
   border-radius: var(--p-radius);
   font-size: 12px;
   color: var(--p-text-2);
@@ -684,20 +733,21 @@ export const PLUTO_CSS = `
   cursor: pointer;
   transition: border-color 0.15s;
   font-family: var(--p-font);
+  line-height: 1.4;
 }
 .pluto-hint:active {
   border-color: var(--p-accent-border);
 }
 
-/* ── Edit Label (inline in messages) ── */
+/* Edit Label */
 .pluto-edit-label {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  margin: 6px 0 2px;
-  padding: 3px 8px;
+  gap: 5px;
+  margin: 8px 0 2px;
+  padding: 4px 10px;
   background: var(--p-surface);
-  border: 1px solid var(--p-border);
+  border: 1px solid var(--p-border-subtle);
   border-radius: 4px;
   font-size: 11px;
   font-family: var(--p-mono);
@@ -710,7 +760,90 @@ export const PLUTO_CSS = `
   background: var(--p-accent);
 }
 
-/* ── Animations ── */
+/* Settings Overlay */
+.pluto-settings {
+  position: absolute;
+  inset: 0;
+  background: var(--p-bg);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  animation: pluto-fade-in 0.15s ease;
+}
+.pluto-settings-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--p-border-subtle);
+}
+.pluto-settings-back {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--p-text-2);
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: var(--p-radius-sm);
+}
+.pluto-settings-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+.pluto-settings-body {
+  flex: 1;
+  padding: 14px;
+  overflow-y: auto;
+}
+.pluto-settings-field {
+  margin-bottom: 16px;
+}
+.pluto-settings-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--p-text-2);
+  margin-bottom: 6px;
+  display: block;
+}
+.pluto-settings-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--p-surface);
+  border: 1px solid var(--p-border);
+  border-radius: var(--p-radius-sm);
+  color: var(--p-text);
+  font-size: 13px;
+  font-family: var(--p-mono);
+  outline: none;
+}
+.pluto-settings-input:focus {
+  border-color: var(--p-accent-border);
+}
+.pluto-settings-hint {
+  font-size: 11px;
+  color: var(--p-text-3);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.pluto-settings-save {
+  width: 100%;
+  padding: 10px;
+  background: var(--p-accent);
+  border: none;
+  border-radius: var(--p-radius);
+  color: #1e1e2e;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--p-font);
+  margin-top: 8px;
+}
+
+/* Animations */
 @keyframes pluto-fade-in {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
@@ -727,9 +860,6 @@ export const PLUTO_CSS = `
   0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
   40% { transform: scale(1); opacity: 1; }
 }
-
-/* ── Scrollbar (messages) ── */
-.pluto-messages::-webkit-scrollbar-track { background: transparent; }
 `;
 
 export function injectStyles(): void {

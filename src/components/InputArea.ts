@@ -21,13 +21,12 @@ export function createInputArea(cb: InputAreaCallbacks): InputAreaHandle {
   wrap.className = 'pluto-input-wrap';
   wrap.style.position = 'relative';
 
-  // Text input row
   const row = document.createElement('div');
   row.className = 'pluto-input-row';
 
   const input = document.createElement('textarea');
   input.className = 'pluto-input';
-  input.placeholder = 'Ask Pluto anything\u2026';
+  input.placeholder = 'Ask Pluto anything...';
   input.rows = 1;
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -40,13 +39,12 @@ export function createInputArea(cb: InputAreaCallbacks): InputAreaHandle {
 
   const sendBtn = document.createElement('button');
   sendBtn.className = 'pluto-send-btn';
-  sendBtn.innerHTML = '\u2191';
+  sendBtn.textContent = '\u2191';
   sendBtn.addEventListener('click', handleSend);
   row.appendChild(sendBtn);
 
   wrap.appendChild(row);
 
-  // Agent selector pill at the bottom
   const agentBar = document.createElement('div');
   agentBar.className = 'pluto-agent-bar';
 
@@ -60,7 +58,7 @@ export function createInputArea(cb: InputAreaCallbacks): InputAreaHandle {
 
   function handleSend() {
     const text = input.value.trim();
-    if (!text) return;
+    if (!text || sendBtn.disabled) return;
     input.value = '';
     autoResize();
     cb.onSend(text);
@@ -73,28 +71,22 @@ export function createInputArea(cb: InputAreaCallbacks): InputAreaHandle {
 
   function updatePill() {
     agentPill.innerHTML = `
-      <span class="pluto-agent-icon">${activeAgent.icon}</span>
       <span class="pluto-agent-name">${esc(activeAgent.name)}</span>
+      <span class="pluto-agent-model">${esc(activeAgent.model)}</span>
       <span class="pluto-agent-chevron">\u25be</span>
     `;
   }
 
   function togglePicker() {
-    if (pickerOpen) {
-      closePicker();
-      return;
-    }
-
+    if (pickerOpen) { closePicker(); return; }
     pickerOpen = true;
     pickerEl = document.createElement('div');
     pickerEl.className = 'pluto-agent-picker';
 
     DEFAULT_AGENTS.forEach(agent => {
       const opt = document.createElement('button');
-      const isActive = agent.id === activeAgent.id;
-      opt.className = `pluto-agent-option${isActive ? ' pluto-agent-option--active' : ''}`;
+      opt.className = `pluto-agent-option${agent.id === activeAgent.id ? ' pluto-agent-option--active' : ''}`;
       opt.innerHTML = `
-        <span class="pluto-agent-option-icon">${agent.icon}</span>
         <span class="pluto-agent-option-info">
           <span class="pluto-agent-option-name">${esc(agent.name)}</span>
           <span class="pluto-agent-option-model">${esc(agent.model)}</span>
@@ -110,14 +102,16 @@ export function createInputArea(cb: InputAreaCallbacks): InputAreaHandle {
     });
 
     wrap.appendChild(pickerEl);
+    setTimeout(() => {
+      document.addEventListener('click', outsideClose);
+    }, 10);
+  }
 
-    const closeHandler = (e: Event) => {
-      if (!pickerEl?.contains(e.target as Node) && !agentPill.contains(e.target as Node)) {
-        closePicker();
-        document.removeEventListener('click', closeHandler);
-      }
-    };
-    setTimeout(() => document.addEventListener('click', closeHandler), 10);
+  function outsideClose(e: Event) {
+    if (!pickerEl?.contains(e.target as Node) && !agentPill.contains(e.target as Node)) {
+      closePicker();
+      document.removeEventListener('click', outsideClose);
+    }
   }
 
   function closePicker() {
