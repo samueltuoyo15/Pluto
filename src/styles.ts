@@ -509,27 +509,27 @@ export const PLUTO_CSS = `
 .pluto-code-body::-webkit-scrollbar { display: none; }
 
 /* Syntax tokens */
-.pluto-tok-kw { color: #cba6f7; }
-.pluto-tok-str { color: #a6e3a1; }
-.pluto-tok-num { color: #fab387; }
-.pluto-tok-cm { color: #6c7086; font-style: italic; }
-.pluto-tok-fn { color: #89b4fa; }
-.pluto-tok-op { color: #89dceb; }
-.pluto-tok-type { color: #f9e2af; }
+.pluto-tok-kw { color: #d9dfe3; }
+.pluto-tok-str { color: #c6d0c8; }
+.pluto-tok-num { color: #d8c6b5; }
+.pluto-tok-cm { color: #8b959b; font-style: italic; }
+.pluto-tok-fn { color: #f2f4f5; }
+.pluto-tok-op { color: #c7ced3; }
+.pluto-tok-type { color: #e4e7e9; }
 
 .pluto-code--bash .pluto-code-header {
-  background: #1a2234;
-  border-bottom-color: #253048;
+  background: #353a3e;
+  border-bottom-color: #4f565c;
 }
 .pluto-code--bash .pluto-code-lang {
-  color: #a6e3a1;
+  color: #dce2e5;
 }
 .pluto-code--bash .pluto-code-body {
-  background: #111927;
-  color: #a6e3a1;
+  background: #2f3438;
+  color: #e7ebed;
 }
-.pluto-code--bash .pluto-tok-kw { color: #89dceb; }
-.pluto-code--bash .pluto-tok-op { color: #f9e2af; }
+.pluto-code--bash .pluto-tok-kw { color: #d9dfe3; }
+.pluto-code--bash .pluto-tok-op { color: #c7ced3; }
 
 /* Typing Indicator */
 .pluto-typing {
@@ -732,10 +732,10 @@ export const PLUTO_CSS = `
   font-family: var(--p-mono);
 }
 .pluto-agent-option--active {
-  background: var(--p-accent-dim);
+  background: var(--p-surface-2);
 }
 .pluto-agent-option--active .pluto-agent-option-name {
-  color: var(--p-accent);
+  color: var(--p-text);
 }
 
 /* Welcome State */
@@ -845,7 +845,7 @@ export const PLUTO_CSS = `
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--p-accent);
+  background: var(--p-text-2);
 }
 
 /* Settings Overlay */
